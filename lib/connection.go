@@ -42,6 +42,7 @@ type Conn struct {
 	Password       string
 	Hosts          []string
 	RequestTracer  func(method, url, body string)
+	HttpClient     *http.Client
 	hp             hostpool.HostPool
 	once           sync.Once
 
@@ -164,6 +165,7 @@ func (c *Conn) NewRequest(method, path, query string) (*Request, error) {
 	}
 
 	newRequest := &Request{
+		Client:       c.HttpClient,
 		Request:      req,
 		hostResponse: hr,
 	}
